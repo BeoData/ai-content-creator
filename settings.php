@@ -60,6 +60,14 @@ function ai_post_creator_register_settings() {
         'ai_settings_section'             // Section in which to place the field
     );
 
+    add_settings_field(
+    'ai_option_ai_model',                  // ID of the settings field
+    'OpenAI Model',                        // Label for the settings field
+    'ai_model_display_callback',           // Callback function to display the field
+    'ai-post-creator-settings',            // Page on which to display the field
+    'ai_settings_section'                  // Section in which to place the field
+);
+
 
 }
 
@@ -77,3 +85,24 @@ function ai_language_display_callback() {
     echo '<p class="description">Unesite željeni jezik. Na primer: English, Serbian, Spanish...</p>';
 }
 
+register_setting('ai_post_creator_options', 'ai_option_ai_model');
+
+function ai_model_display_callback() {
+    $selected_value = get_option('ai_option_ai_model', '');
+    
+    $ai_models = array(
+        'davinci' => 'Davinci',
+        'curie' => 'Curie',
+        'babbage' => 'Babbage',
+        'ada' => 'Ada'
+        // Add more models here as needed
+    );
+    
+    echo '<select name="ai_option_ai_model" class="regular-text">';
+    foreach ($ai_models as $key => $value) {
+        $selected = ($selected_value == $key) ? 'selected' : '';
+        echo '<option value="' . esc_attr($key) . '" ' . $selected . '>' . esc_html($value) . '</option>';
+    }
+    echo '</select>';
+    echo '<p class="description">Select the desired AI model.</p>';
+}

@@ -105,3 +105,4 @@ function add_thickbox_modal() {
         include_once plugin_dir_path(__FILE__) . 'templates/ai_post_popup.php';
     }
 }
+
